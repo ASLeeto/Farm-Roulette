@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Farm Roulette</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    text-align: center;
+    background: #f2f7f2;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  .roulette-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin: 20px auto;
+  }
+
+  .wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 6px solid #333;
+    background: conic-gradient(
+      #ff9966 0deg 30deg,
+      #ffff99 30deg 60deg,
+      #ccffcc 60deg 90deg,
+      #ffff99 90deg 120deg,
+      #cccccc 120deg 150deg,
+      #ffff99 150deg 180deg,
+      #ccffcc 180deg 210deg,
+      #ffff99 210deg 240deg,
+      #ffcccc 240deg 270deg,
+      #ffff99 270deg 300deg,
+      #ccffcc 300deg 330deg,
+      #ffff99 330deg 360deg
+    );
+    transition: transform 4s cubic-bezier(.17,.67,.12,.99);
+    transform: rotate(0deg);
+  }
+
+  .pointer {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 26px;
+  }
+
+  button {
+    font-size: 20px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    background: #4caf50;
+    color: white;
+    cursor: pointer;
+  }
+
+  button:active {
+    transform: scale(0.97);
+  }
+
+  #result {
+    font-size: 22px;
+    margin-top: 15px;
+    min-height: 30px;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Farm Roulette 🌾</h1>
+
+<div class="roulette-container">
+  <div class="wheel" id="wheel"></div>
+  <div class="pointer">▼</div>
+</div>
+
+<button id="spinBtn" type="button">SPIN</button>
+
+<div id="result"></div>
+
+<script>
+  const sections = [
+    "Fox 🦊",
+    "Duck 🦆",
+    "Goat 🐐",
+    "Duck 🦆",
+    "Wolf 🐺",
+    "Duck 🦆",
+    "Goat 🐐",
+    "Duck 🦆",
+    "Piggy 🐷",
+    "Duck 🦆",
+    "Goat 🐐",
+    "Duck 🦆"
+  ];
+
+  const wheel = document.getElementById("wheel");
+  const result = document.getElementById("result");
+  const button = document.getElementById("spinBtn");
+
+  let rotation = 0;
+  const slice = 360 / sections.length;
+
+  function spin() {
+    const extraSpins = Math.floor(Math.random() * 4) + 3;
+    const randomAngle = Math.random() * 360;
+
+    rotation += extraSpins * 360 + randomAngle;
+
+    // Force Safari to recognize animation
+    wheel.style.webkitTransform = `rotate(${rotation}deg)`;
+    wheel.style.transform = `rotate(${rotation}deg)`;
+
+    const finalAngle = (360 - (rotation % 360)) % 360;
+    const index = Math.floor(finalAngle / slice);
+
+    setTimeout(() => {
+      result.textContent = "Result: " + sections[index];
+    }, 4000);
+  }
+
+  // IMPORTANT: iOS Safari fix
+  button.addEventListener("touchstart", function (e) {
+    e.preventDefault();
+    spin();
+  });
+
+  // Still keep click for desktop
+  button.addEventListener("click", spin);
+</script>
+
+
+</body>
+</html>
