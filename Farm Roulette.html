@@ -51,19 +51,20 @@
   .pointer {
     position: absolute;
     top: -14px;
-    left: 50%;
+    left: 52%;
     transform: translateX(-50%);
-    font-size: 26px;
+    font-size: 47px;
   }
 
   button {
-    font-size: 20px;
-    padding: 12px 30px;
+    font-size: 42px;
+    padding: 20px 30px;
     border: none;
-    border-radius: 8px;
+    border-radius: 80px;
     background: #4caf50;
     color: white;
     cursor: pointer;
+	margin: 0 0 0 300px;
   }
 
   button:active {
@@ -71,7 +72,7 @@
   }
 
   #result {
-    font-size: 22px;
+    font-size: 36px;
     margin-top: 15px;
     min-height: 30px;
   }
@@ -80,31 +81,31 @@
 
 <body>
 
-<h1>Farm Roulette 🌾</h1>
+<h1>🌾Ферма Влада і Ліни 🦆🐐🐷</h1>
 
 <div class="roulette-container">
   <div class="wheel" id="wheel"></div>
   <div class="pointer">▼</div>
 </div>
 
-<button id="spinBtn" type="button">SPIN</button>
+<button id="spinBtn" type="button">◙</button>
 
 <div id="result"></div>
 
 <script>
   const sections = [
-    "Fox 🦊",
-    "Duck 🦆",
-    "Goat 🐐",
-    "Duck 🦆",
-    "Wolf 🐺",
-    "Duck 🦆",
-    "Goat 🐐",
-    "Duck 🦆",
-    "Piggy 🐷",
-    "Duck 🦆",
-    "Goat 🐐",
-    "Duck 🦆"
+    "Лисиця 🦊",
+    "Качка 🦆",
+    "Коза 🐐",
+    "Качка 🦆",
+    "Вовк 🐺",
+    "Качка 🦆",
+    "Коза 🐐",
+    "Качка 🦆",
+    "Свинка 🐷",
+    "Качка 🦆",
+    "Коза 🐐",
+    "Качка 🦆"
   ];
 
   const wheel = document.getElementById("wheel");
@@ -128,7 +129,7 @@
     const index = Math.floor(finalAngle / slice);
 
     setTimeout(() => {
-      result.textContent = "Result: " + sections[index];
+      result.textContent = "Результат: " + sections[index];
     }, 4000);
   }
 
