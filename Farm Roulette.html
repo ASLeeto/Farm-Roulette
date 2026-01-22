@@ -46,6 +46,7 @@
     );
     transition: transform 4s cubic-bezier(.17,.67,.12,.99);
     transform: rotate(0deg);
+	  touch-action: none;
   }
 
   .pointer {
@@ -80,7 +81,7 @@
 
 <body>
 
-<h1>🌾Ферма Влада і Ліни 🦆🐐🐷</h1>
+<h1>🌾Ферма Влада і Ліни 🦆🐐🐷🐴🦊🐺🐕🐶</h1>
 
 <div class="roulette-container">
   <div class="wheel" id="wheel"></div>
@@ -92,47 +93,87 @@
 <div id="result"></div>
 
 <script>
-const items = [
-  "Fox 🦊","Duck 🦆","Goat 🐐","Duck 🦆",
-  "Wolf 🐺","Duck 🦆","Goat 🐐","Duck 🦆",
-  "Piggy 🐷","Duck 🦆","Goat 🐐","Duck 🦆"
-];
+  const sections = [
+    "Лисиця 🦊",
+    "Качка 🦆",
+    "Коза 🐐",
+    "Качка 🦆",
+    "Вовк 🐺",
+    "Качка 🦆",
+    "Коза 🐐",
+    "Качка 🦆",
+    "Свинка 🐷",
+    "Качка 🦆",
+    "Коза 🐐",
+    "Качка 🦆"
+  ];
 
-const wheel = document.getElementById("wheel");
-const result = document.getElementById("result");
+  const wheel = document.getElementById("wheel");
+  const result = document.getElementById("result");
+  const button = document.getElementById("spinBtn");
 
-let rotation = 0;
-let startX = 0;
-let isDragging = false;
+  let rotation = 0;
+  let startX = 0;
+  let isDragging = false;
 
-const slice = 360 / items.length;
+  const slice = 360 / sections.length;
 
-// Touch start
-wheel.addEventListener("touchstart", e => {
-  isDragging = true;
-  startX = e.touches[0].clientX;
-});
+  // --- BUTTON SPIN (unchanged) ---
+  function spinButton() {
+    const extraSpins = Math.floor(Math.random() * 4) + 3;
+    const randomAngle = Math.random() * 360;
 
-// Touch move → rotate wheel
-wheel.addEventListener("touchmove", e => {
-  if (!isDragging) return;
-  const currentX = e.touches[0].clientX;
-  const delta = currentX - startX;
-  rotation += delta * 0.8; // sensitivity
-  wheel.style.transform = `rotate(${rotation}deg)`;
-  startX = currentX;
-});
+    rotation += extraSpins * 360 + randomAngle;
 
-// Touch end → decide result
-wheel.addEventListener("touchend", () => {
-  isDragging = false;
+    wheel.style.webkitTransform = `rotate(${rotation}deg)`;
+    wheel.style.transform = `rotate(${rotation}deg)`;
 
-  const finalAngle = (360 - (rotation % 360)) % 360;
-  const index = Math.floor(finalAngle / slice);
+    const finalAngle = (360 - (rotation % 360)) % 360;
+    const index = Math.floor(finalAngle / slice);
 
-  result.textContent = "Result: " + items[index];
-});
+    setTimeout(() => {
+      result.textContent = "Результат: " + sections[index];
+    }, 4000);
+  }
+
+  button.addEventListener("touchstart", e => {
+    e.preventDefault();
+    spinButton();
+  });
+  button.addEventListener("click", spinButton);
+
+  // --- SWIPE SPIN ---
+  wheel.addEventListener("touchstart", e => {
+    e.preventDefault();
+    isDragging = true;
+    startX = e.touches[0].clientX;
+  }, { passive: false });
+
+  wheel.addEventListener("touchmove", e => {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    const currentX = e.touches[0].clientX;
+    const delta = currentX - startX;
+
+    rotation += delta * 0.9; // sensitivity
+    wheel.style.webkitTransform = `rotate(${rotation}deg)`;
+    wheel.style.transform = `rotate(${rotation}deg)`;
+
+    startX = currentX;
+  }, { passive: false });
+
+  wheel.addEventListener("touchend", () => {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const finalAngle = (360 - (rotation % 360)) % 360;
+    const index = Math.floor(finalAngle / slice);
+
+    result.textContent = "Результат: " + sections[index];
+  });
 </script>
+
 
 
 
