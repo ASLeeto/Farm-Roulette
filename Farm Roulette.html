@@ -92,55 +92,48 @@
 <div id="result"></div>
 
 <script>
-  const sections = [
-    "Лисиця 🦊",
-    "Качка 🦆",
-    "Коза 🐐",
-    "Качка 🦆",
-    "Вовк 🐺",
-    "Качка 🦆",
-    "Коза 🐐",
-    "Качка 🦆",
-    "Свинка 🐷",
-    "Качка 🦆",
-    "Коза 🐐",
-    "Качка 🦆"
-  ];
+const items = [
+  "Fox 🦊","Duck 🦆","Goat 🐐","Duck 🦆",
+  "Wolf 🐺","Duck 🦆","Goat 🐐","Duck 🦆",
+  "Piggy 🐷","Duck 🦆","Goat 🐐","Duck 🦆"
+];
 
-  const wheel = document.getElementById("wheel");
-  const result = document.getElementById("result");
-  const button = document.getElementById("spinBtn");
+const wheel = document.getElementById("wheel");
+const result = document.getElementById("result");
 
-  let rotation = 0;
-  const slice = 360 / sections.length;
+let rotation = 0;
+let startX = 0;
+let isDragging = false;
 
-  function spin() {
-    const extraSpins = Math.floor(Math.random() * 4) + 3;
-    const randomAngle = Math.random() * 360;
+const slice = 360 / items.length;
 
-    rotation += extraSpins * 360 + randomAngle;
+// Touch start
+wheel.addEventListener("touchstart", e => {
+  isDragging = true;
+  startX = e.touches[0].clientX;
+});
 
-    // Force Safari to recognize animation
-    wheel.style.webkitTransform = `rotate(${rotation}deg)`;
-    wheel.style.transform = `rotate(${rotation}deg)`;
+// Touch move → rotate wheel
+wheel.addEventListener("touchmove", e => {
+  if (!isDragging) return;
+  const currentX = e.touches[0].clientX;
+  const delta = currentX - startX;
+  rotation += delta * 0.8; // sensitivity
+  wheel.style.transform = `rotate(${rotation}deg)`;
+  startX = currentX;
+});
 
-    const finalAngle = (360 - (rotation % 360)) % 360;
-    const index = Math.floor(finalAngle / slice);
+// Touch end → decide result
+wheel.addEventListener("touchend", () => {
+  isDragging = false;
 
-    setTimeout(() => {
-      result.textContent = "Результат: " + sections[index];
-    }, 4000);
-  }
+  const finalAngle = (360 - (rotation % 360)) % 360;
+  const index = Math.floor(finalAngle / slice);
 
-  // IMPORTANT: iOS Safari fix
-  button.addEventListener("touchstart", function (e) {
-    e.preventDefault();
-    spin();
-  });
-
-  // Still keep click for desktop
-  button.addEventListener("click", spin);
+  result.textContent = "Result: " + items[index];
+});
 </script>
+
 
 
 </body>
