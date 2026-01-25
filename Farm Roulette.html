@@ -31,19 +31,22 @@
     border-radius: 50%;
     border: 6px solid #333;
     background: conic-gradient(
-      #ff9966 0deg 30deg,
-      #ffff99 30deg 60deg,
-      #ccffcc 60deg 90deg,
-      #ffff99 90deg 120deg,
-      #cccccc 120deg 150deg,
-      #ffff99 150deg 180deg,
-      #ccffcc 180deg 210deg,
-      #ffff99 210deg 240deg,
-      #ffcccc 240deg 270deg,
-      #ffff99 270deg 300deg,
-      #ccffcc 300deg 330deg,
-      #ffff99 330deg 360deg
-    );
+  #ff9966 0deg 24deg,    /* Fox */
+  #ccffcc 24deg 48deg,   /* Goat */
+  #ffff99 48deg 72deg,   /* Duck */
+  #ccffcc 72deg 96deg,   /* Goat */
+  #ffff99 96deg 120deg,  /* Duck */
+  #ccffcc 120deg 144deg, /* Goat */
+  #cccccc 144deg 168deg, /* Wolf */
+  #ffcccc 168deg 192deg, /* Piggy */
+  #ffff99 192deg 216deg, /* Duck */
+  #ccffcc 216deg 240deg, /* Goat */
+  #ffff99 240deg 264deg, /* Duck */
+  #ffcccc 264deg 288deg, /* Piggy */
+  #ffff99 288deg 312deg, /* Duck */
+  #ccffcc 312deg 336deg, /* Goat */
+  #ffff99 336deg 360deg  /* Duck */
+);
     transition: transform 4s cubic-bezier(.17,.67,.12,.99);
     transform: rotate(0deg);
 	  touch-action: none;
@@ -81,32 +84,38 @@
 
 <body>
 
-<h1>🌾Ферма Влада і Ліни 🦆🐐🐷🐴🦊🐺🐕🐶</h1>
-
+<h1>🌾</h1>
+<h1>Ферма Влада і Ліни 🦆🐐🐷🐴🦊🐺🐕🐶</h1>
+<p>&nbsp;</p>
 <div class="roulette-container">
   <div class="wheel" id="wheel"></div>
   <div class="pointer">▼</div>
 </div>
 
-<button id="spinBtn" type="button">Крути 1.8</button>
+ <button id="spinBtn" type="button">Крути</button>
+
 
 <div id="result"></div>
 
 <script>
-  const sections = [
-    "Лисиця 🦊",
-    "Качка 🦆",
-    "Коза 🐐",
-    "Качка 🦆",
-    "Вовк 🐺",
-    "Качка 🦆",
-    "Коза 🐐",
-    "Качка 🦆",
-    "Свинка 🐷",
-    "Качка 🦆",
-    "Коза 🐐",
-    "Качка 🦆"
-  ];
+const sections = [
+  "Лисиця 🦊",
+  "Коза 🐐",
+  "Качка 🦆",
+  "Коза 🐐",
+  "Качка 🦆",
+  "Коза 🐐",
+  "Вовк 🐺",
+  "Свинка 🐷",
+  "Качка 🦆",
+  "Коза 🐐",
+  "Качка 🦆",
+  "Свинка 🐷",
+  "Качка 🦆",
+  "Коза 🐐",
+  "Качка 🦆"
+];
+
 
   const wheel = document.getElementById("wheel");
   const result = document.getElementById("result");
